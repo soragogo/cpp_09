@@ -41,8 +41,6 @@ float BitcoinExchange::get_rate(std::string const & date) {
 }
 
 bool BitcoinExchange::is_number(const std::string& s) {
-    if (s.empty())
-        return false;
 
     for (std::string::const_iterator it = s.begin(); it != s.end(); ++it) {
         if (!isdigit(*it))
@@ -50,6 +48,7 @@ bool BitcoinExchange::is_number(const std::string& s) {
     }
     return true;
 }
+
 
 bool BitcoinExchange::is_on_calendar(int const & year, int const & month, int const & day) {
     const int MONTH_DAYS[13] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
@@ -95,6 +94,28 @@ bool BitcoinExchange::is_valid_date(std::string date) {
     return true;
 }
 
+bool BitcoinExchange::is_valid_value(std::string value) {
+    bool period = false;
+    if (value == "" || value[0] != ' ')
+        return false;
+
+    std::string::const_iterator it = value.begin() + 1;
+    if (!isdigit(*it) && *it != '.')
+        return false;
+    if (*it == '.')
+        period = true;
+    ++it;
+    for (; it != value.end(); ++it) {
+        if (*it == '.') {
+            if (period == true)
+                return false;
+            period = true;
+        }
+        else if (!isdigit(*it))
+            return false;
+    }
+    return true;
+}
 
 void BitcoinExchange::exchange(std::string & line) {
     std::string date;
@@ -107,12 +128,12 @@ void BitcoinExchange::exchange(std::string & line) {
     if (!is_valid_date(date))
         throw std::invalid_argument("Error: bad input => " + line);
 
-    std::string value_str;
-    std::getline(ss, value_str);
+        std::string value_str;
+        std::getline(ss, value_str);
 
-    if (value_str == "") {
+    if (!is_valid_value(value_str))
         throw std::invalid_argument("Error: bad input => " + line);
-    }
+
     std::istringstream value_ss(value_str);
     value_ss >> value;
 

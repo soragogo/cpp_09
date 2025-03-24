@@ -19,6 +19,7 @@ public:
     void load_data();
     float get_rate(std::string const & date);
     bool is_valid_date(std::string date);
+    bool is_valid_value(std::string value);
     bool is_number(const std::string& s);
     bool is_on_calendar(int const & year, int const & month, int const & day);
 };
