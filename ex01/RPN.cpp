@@ -8,6 +8,8 @@ void RPN::arithmetic(char const & c) {
     int b = _s.top();
     _s.pop();
 
+    if (c == '/' && a == 0) throw std::runtime_error("Error");
+
     if (c == '+') _s.push(b+a);
     else if (c == '-') _s.push(b-a);
     else if (c == '*') _s.push(b*a);
