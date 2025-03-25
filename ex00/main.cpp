@@ -1,7 +1,13 @@
 #include "BitcoinExchange.hpp"
 
-int main() {
-    std::ifstream input_file("input.txt");
+int main(int argc, char * argv[]) {
+
+    if (argc != 2) {
+        std::cerr << "Error: could not open file." <<std::endl;
+        return 1;
+    }
+
+    std::ifstream input_file(argv[1]);
     try
     {
         if(!input_file) {
