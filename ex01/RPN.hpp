@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <stack>
 class RPN {
 public:
     RPN(std::string const & f) : _f(f) {};
