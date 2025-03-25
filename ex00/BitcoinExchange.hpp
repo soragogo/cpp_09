@@ -9,8 +9,8 @@
 class BitcoinExchange {
 
 public:
-    BitcoinExchange();
-    ~BitcoinExchange();
+    BitcoinExchange() ;
+    ~BitcoinExchange() {};
     void exchange(std::string & line);
 
 
