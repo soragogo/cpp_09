@@ -1,10 +1,10 @@
-NAME=ex01
+NAME=RPN
 
 CXX=c++
 
 CXXFLAGS=-Wall -Wextra -Werror -std=c++98
 
-SRCS=main.cpp Span.cpp
+SRCS=main.cpp RPN.cpp
 
 OBJDIR=objs
 
@@ -29,7 +29,7 @@ fclean:clean
 re:fclean
 	make all
 
-debug: CXXFLAGS += -g -O0 -fsanitize=address
+debug: CXXFLAGS += -g -O0 
 debug: fclean all
 	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
 

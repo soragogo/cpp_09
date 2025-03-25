@@ -1,6 +1,22 @@
 #ifndef RPN_HPP
 # define RPN_HPP
 
+#include <iostream>
+#include <string>
+class RPN {
+public:
+    RPN(std::string const & f) : _f(f) {};
+    ~RPN() {};
+    void caliculate();
+private:
+    std::string _f;
+    std::stack<int> _s;
+    RPN();
+    RPN(RPN const & rpn) {(void)rpn;};
+    RPN & operator=(RPN const & rpn) {(void)rpn; return *this;};
+    void arithmetic(char const & c);
+};
+
 
 
 # define END             "\033[0m"
