@@ -125,14 +125,12 @@ void BitcoinExchange::exchange(std::string & line) {
 
     std::getline(ss, date, '|');
 
-    if (!is_valid_date(date))
-        throw std::invalid_argument("Error: bad input => " + line);
+    if (!is_valid_date(date)) throw std::invalid_argument("Error: bad input => " + line);
 
         std::string value_str;
         std::getline(ss, value_str);
 
-    if (!is_valid_value(value_str))
-        throw std::invalid_argument("Error: bad input => " + line);
+    if (!is_valid_value(value_str)) throw std::invalid_argument("Error: bad input => " + line);
 
     std::istringstream value_ss(value_str);
     value_ss >> value;

@@ -10,10 +10,13 @@ class BitcoinExchange {
 
 public:
     BitcoinExchange();
+    ~BitcoinExchange();
     void exchange(std::string & line);
 
 
     private:
+    BitcoinExchange(BitcoinExchange const & bce) {(void)bce;};
+    BitcoinExchange & operator=(BitcoinExchange const & bce) {(void)bce; return (*this);};
     std::map<std::string, float> _data;
     std::string _input;
     void load_data();
