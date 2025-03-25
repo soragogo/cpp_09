@@ -9,11 +9,11 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - run: make -C ex00
-      - run: ./ex00/ex00
+      - run: ./ex00/btc
       - run: make fclean -C ex00
-      # - run: make -C ex01
-      # - run: ./ex01/ex01
-      # - run: make fclean -C ex01
+      - run: make -C ex01
+      - run: ./ex01/RPN
+      - run: make fclean -C ex01
       # - run: make -C ex02
       # - run: ./ex02/ex02
       # - run: make fclean -C ex02
