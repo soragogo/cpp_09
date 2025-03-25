@@ -8,7 +8,6 @@ void RPN::arithmetic(char const & c) {
     int b = _s.top();
     _s.pop();
 
-
     if (c == '+') _s.push(b+a);
     else if (c == '-') _s.push(b-a);
     else if (c == '*') _s.push(b*a);
@@ -25,7 +24,7 @@ void RPN::caliculate() {
         else if (*it == '+' || *it == '-' || *it == '*' || *it == '/') {
             arithmetic(*it);
         }
-        else  throw std::runtime_error("Error");
+        else throw std::runtime_error("Error");
     }
     if (_s.size() != 1) throw std::runtime_error("Error");
 
