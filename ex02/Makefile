@@ -1,10 +1,10 @@
-NAME=ex02
+NAME=PmergeMe
 
 CXX=c++
 
-CXXFLAGS=-Wall -Wextra -Werror -std=c++98
+CXXFLAGS=-Wall -Wextra -Werror -std=c++98 -g
 
-SRCS=main.cpp
+SRCS=main.cpp PmergeMe.cpp
 
 OBJDIR=objs
 
@@ -29,7 +29,7 @@ fclean:clean
 re:fclean
 	make all
 
-debug: CXXFLAGS += -g -O0 
+debug: CXXFLAGS += -g -O0
 debug: fclean all
 	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
 

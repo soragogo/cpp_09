@@ -1,7 +1,9 @@
 #ifndef PMERGEME_HPP
 # define PMERGEME_HPP
 
-
+#include <vector>
+#include <list>
+#include <iostream>
 
 # define END             "\033[0m"
 # define BOLD            "\033[1m"
