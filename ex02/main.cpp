@@ -59,7 +59,7 @@ void merge_insersion_sort(std::vector<Node*> v, std::vector<Node*> &res){
     for (std::vector<Node*>::iterator it = v.begin(); it != v.end() - 1; ++it) {
         if (std::distance(it, v.begin()) % 2 == 0) {
             std::vector<Node *>::iterator l_it = (*it)->getNumber() > (*(it + 1))->getNumber() ? it : (it + 1);
-            std::vector<Node *>::iterator s_it = (*it)->getNumber() < (*(it + 1))->getNumber() ? it : (it + 1);
+            std::vector<Node *>::iterator s_it = !((*it)->getNumber() > (*(it + 1))->getNumber()) ? it : (it + 1);
             (*l_it)->setSmallerPair(*s_it);
             (*s_it)->setLargerPair(*l_it);
             large.push_back(*l_it);
@@ -84,7 +84,7 @@ void merge_insersion_sort(std::vector<Node*> v, std::vector<Node*> &res){
             // largeの要素の位置をresの中で見つける
             std::vector<Node*>::iterator res_pos;
             for (res_pos = res.begin(); res_pos != res.end(); ++res_pos) {
-                if (*res_pos == *it) {
+                if (&*res_pos == &*it) {
                     break; // 見つかった位置
                 }
             }
@@ -106,13 +106,21 @@ void merge_insersion_sort(std::vector<Node*> v, std::vector<Node*> &res){
         }
     }
 }
-
+// 3 86 70 31 91 44 30 51 52 10 100 63 10 22 59 94 42 9 58 46 20 5 60 57 31 9 2 31 50 100
 
 int main() {
     std::vector<Node *> v;
-    for (int i = 10; i > 0; --i) {
-        v.push_back(new Node(i));
+    // int tmp[] = {3, 1 , 3, 2 ,4};
+    // for (unsigned int n = 0; n < sizeof(tmp) / sizeof(int); n++) {
+    //     v.push_back(new Node(tmp[n]));
+    // }
+    for (int n = 0; n < 1000; n++) {
+        int l;
+        std::cin >> l;
+        v.push_back(new Node(l));
+        std::cout << l << " ";
     }
+    std::cout << std::endl;
     std::vector<Node *> res;
     merge_insersion_sort(v, res);
     for (std::vector<Node *>::iterator it = res.begin(); it != res.end(); ++it) {
