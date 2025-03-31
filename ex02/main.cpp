@@ -90,19 +90,21 @@ void merge_insersion_sort(std::vector<Node*> v, std::vector<Node*> &res){
             }
 
             // 適切な挿入位置を見つける（res_posから前方向に探索）
-            std::vector<Node*>::iterator insert_pos = res_pos;
-            while (insert_pos != res.begin()) {
-                --insert_pos;
-                if ((*insert_pos)->getNumber() <= smaller_pair->getNumber()) {
-                    // 適切な位置を見つけたら一つ後ろに
-                    ++insert_pos;
-                    break;
+            std::vector<Node*>::iterator begin = res.begin();
+            std::vector<Node*>::iterator end = res_pos - 1;
+            std::vector<Node*>::iterator mid;
+            while (begin <= end) {
+                mid = begin + (end - begin) / 2;
+                if ((*mid)->getNumber() > smaller_pair->getNumber()) {
+                    end = mid - 1;
+                } else {
+                    begin = mid + 1;
                 }
             }
 
             // smaller_pairを適切な位置に挿入
             smaller_pair->sorted();
-            res.insert(insert_pos, smaller_pair);
+            res.insert(begin, smaller_pair);
         }
     }
 }
@@ -110,22 +112,36 @@ void merge_insersion_sort(std::vector<Node*> v, std::vector<Node*> &res){
 
 int main() {
     std::vector<Node *> v;
-    // int tmp[] = {3, 1 , 3, 2 ,4};
+    // int tmp[] = {
+    //     3, 86, 70, 31, 91, 44, 30, 51, 52, 10,
+    //     100, 63, 10, 22, 59, 94, 42, 9, 58, 46,
+    //     20, 5, 60, 57, 31, 9, 2, 31, 50, 100
+    // };
     // for (unsigned int n = 0; n < sizeof(tmp) / sizeof(int); n++) {
     //     v.push_back(new Node(tmp[n]));
     // }
-    for (int n = 0; n < 1000; n++) {
+    for (int n = 0; n < 10000; n++) {
         int l;
         std::cin >> l;
         v.push_back(new Node(l));
-        std::cout << l << " ";
     }
     std::cout << std::endl;
     std::vector<Node *> res;
     merge_insersion_sort(v, res);
+    int i = 0; int j = -1;
     for (std::vector<Node *>::iterator it = res.begin(); it != res.end(); ++it) {
-        std::cout << (*it)->getNumber() << " ";
+        i = (*it)->getNumber();
+        std::cout << i << " ";
+        if (i < j) {
+            std::cout << RED << "KO" << END << std::endl;
+            return 1;
+        }
+        j = i;
     }
-
+    std::cout << GREEN << "OK" << END << std::endl;
 }
 
+
+# define RED "\033[31m"
+# define GREEN "\033[32m"
+# define end "\033[0m"
