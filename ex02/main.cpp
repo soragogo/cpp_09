@@ -4,14 +4,7 @@
 int main() {
     std::vector<Node *> v;
     int tmp[] = {
-        3, 86, 70, 31, 91, 44, 30, 51, 52, 10,
-        100, 63, 10, 22, 59, 94, 42, 9, 58, 46,
-        20, 5, 60, 57, 31, 9, 2, 31, 50, 100,
-        99, 98, 97, 96, 95, 94, 93, 92, 91, 90,
-        89, 88, 87, 86, 85, 84, 83, 82, 81, 80,
-        2000, 1932, 1923, 1924, 1925, 1926, 1927, 1928, 1929, 1930,
-        1931, 1932, 1933, 1934, 1935, 1936, 1937, 1938, 1939, 1940,
-        1941, 1942, 1943, 1944, 1945, 1946, 1947, 1948, 1949, 1950
+        10, 9, 8, 7, 6
     };
     for (unsigned int n = 0; n < sizeof(tmp) / sizeof(int); n++) {
         v.push_back(new Node(tmp[n]));
@@ -35,5 +28,10 @@ int main() {
         j = i;
     }
     std::cout << GREEN << "OK" << END << std::endl;
+    if ((sizeof(tmp) / sizeof(int)) == res.size()) {
+        std::cout << GREEN << "AND SIZE OK" << END << std::endl;
+    } else {
+        std::cout << RED << "BUT SIZE KO" << END << std::endl;
+    }
 }
 

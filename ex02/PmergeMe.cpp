@@ -26,9 +26,7 @@ Node & Node::operator=(const Node & rhs) {
 void Node::printNode(void) {
     std::cout << "Node: " << _number << std::endl;
     std::cout << "Larger pair: ";
-    for (std::vector<Node *>::iterator it = _larger_pair.begin(); it != _larger_pair.end(); ++it) {
-        std::cout << (*it)->getNumber() << " ";
-    }
+        std::cout << _larger_pair->getNumber() << " ";
     std::cout << std::endl;
     std::cout << "Smaller pair: ";
     for (std::vector<Node *>::iterator it = _smaller_pair.begin(); it != _smaller_pair.end(); ++it) {
@@ -73,41 +71,31 @@ void merge_insersion_sort(std::vector<Node*> v, std::vector<Node*> &res){
         large.push_back(v.back());
 
     merge_insersion_sort(large, res);
-    for (std::vector<Node *>::iterator it = large.begin(); it != large.end(); ++it) {
-        if (!(*it)->isSorted()) {
-            (*it)->sorted();
-            res.push_back(*it);
+    for (std::vector<Node *>::reverse_iterator it = small.rbegin(); it != small.rend(); ++it) {
+
+        Node* smaller_pair = *it;
+        Node* larger_pair = smaller_pair->getLargerPair();
+
+        std::vector<Node*>::iterator res_pos;
+        for (res_pos = res.begin(); res_pos != res.end(); ++res_pos) {
+            if (&*res_pos == &larger_pair) {
+                break;
+            }
         }
 
-        // smallerPairがあれば処理
-        if (!(*it)->getSmallerPair().empty()) {
-            Node* smaller_pair = (*it)->getSmallerPair().back();
-            (*it)->eraseSmallerPair(); // 末尾の要素を削除
-
-            // largeの要素の位置をresの中で見つける
-            std::vector<Node*>::iterator res_pos;
-            for (res_pos = res.begin(); res_pos != res.end(); ++res_pos) {
-                if (&*res_pos == &*it) {
-                    break; // 見つかった位置
-                }
+        std::vector<Node*>::iterator begin = res.begin();
+        std::vector<Node*>::iterator end = res_pos - 1;
+        std::vector<Node*>::iterator mid;
+        while (begin <= end) {
+            mid = begin + (end - begin) / 2;
+            if ((*mid)->getNumber() > smaller_pair->getNumber()) {
+                end = mid - 1;
+            } else {
+                begin = mid + 1;
             }
-
-            // 適切な挿入位置を見つける（res_posから前方向に探索）
-            std::vector<Node*>::iterator begin = res.begin();
-            std::vector<Node*>::iterator end = res_pos - 1;
-            std::vector<Node*>::iterator mid;
-            while (begin <= end) {
-                mid = begin + (end - begin) / 2;
-                if ((*mid)->getNumber() > smaller_pair->getNumber()) {
-                    end = mid - 1;
-                } else {
-                    begin = mid + 1;
-                }
-            }
-
-            // smaller_pairを適切な位置に挿入
-            smaller_pair->sorted();
-            res.insert(begin, smaller_pair);
         }
+
+        smaller_pair->sorted();
+        res.insert(begin, smaller_pair);
     }
 }

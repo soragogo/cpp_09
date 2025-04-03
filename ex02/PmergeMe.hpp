@@ -12,11 +12,10 @@ class Node {
         ~Node();
 
         // Member functions
-        inline std::vector<Node *> & getLargerPair() { return _larger_pair; };
+        inline Node * & getLargerPair() { return _larger_pair; };
         inline std::vector<Node *> & getSmallerPair() { return _smaller_pair; };
-        inline void setLargerPair(Node * n) {_larger_pair.push_back(n);};
+        inline void setLargerPair(Node * n) {_larger_pair = n;};
         inline void setSmallerPair(Node * n) {_smaller_pair.push_back(n);};
-        inline void eraseLargerPair() {_larger_pair.pop_back();}
         inline void eraseSmallerPair() {_smaller_pair.pop_back();}
         inline int const & getNumber() {return _number;};
         inline void sorted() {_sorted = true;};
@@ -28,7 +27,7 @@ class Node {
         int _number;
         bool _sorted;
         std::vector<Node *> _smaller_pair;
-        std::vector<Node *> _larger_pair;
+        Node* _larger_pair;
 
         // Copy constructor and assignment operator
         Node(void);
