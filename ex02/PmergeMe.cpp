@@ -91,18 +91,39 @@ void merge_insersion_sort(std::vector<Node*> v, std::vector<Node*> &res){
             (*l_it)->setSmallerPair(*s_it);
             (*s_it)->setLargerPair(*l_it);
             large.push_back(*l_it);
-            small.push_back(*s_it);
+            // small.push_back(*s_it);
         }
     }
     if (v.size() % 2 == 1)
         large.push_back(v.back());
 
     merge_insersion_sort(large, res);
+    for (std::vector<Node *>::iterator it = res.begin(); it != res.end(); ++it) {
+        if (!(*it)->getSmallerPair().empty()) {
+            small.push_back((*it)->getSmallerPair().back());
+            (*it)->eraseSmallerPair();
+        }
+    }
+
+
 
     std::vector<int> indices = generate_indices(small.size());
+    std::cout << "indices: ";
+    for (size_t i = 0; i < indices.size(); ++i) {
+        std::cout << indices[i] << " ";
+    }
+    std::cout << std::endl;
+    std::cout << "small: ";
     for (size_t i = 0; i < small.size(); ++i) {
-        std::vector<Node*>::iterator it = small.begin() + indices[i-1];
+        std::cout << small[i]->getNumber() << " ";
+    }
+    std::cout << std::endl;
+    int small_end = small.size() - 1;
+    for (size_t i = 0; i < small.size(); ++i) {
+        int geta = (indices[i] - 1) > small_end ? small_end-- : indices[i] - 1;
+        std::vector<Node*>::iterator it = (small.begin() + geta);
         Node* smaller_pair = *it;
+        std::cout << "smaller_pair: " << smaller_pair->getNumber() << std::endl;
         Node* larger_pair = smaller_pair->getLargerPair();
 
         std::vector<Node*>::iterator res_pos;

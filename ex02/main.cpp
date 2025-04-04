@@ -4,7 +4,8 @@
 int main() {
     std::vector<Node *> v;
     int tmp[] = {
-        10, 9, 8, 7, 6
+
+        6,5,4,3,2,1
     };
     for (unsigned int n = 0; n < sizeof(tmp) / sizeof(int); n++) {
         v.push_back(new Node(tmp[n]));

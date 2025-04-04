@@ -23,7 +23,7 @@ class Node {
 
         //debug
         void printNode(void);
-        private:
+    private:
         int _number;
         bool _sorted;
         std::vector<Node *> _smaller_pair;
