@@ -5,3 +5,6 @@ ex*/*.txt
 ex*/objs
 .vscode
 ex00/data.csv
+*/.dSYM
+*/a.out
+*/PmergeMe
