@@ -50,7 +50,7 @@ std::vector<int> generate_indices(int count) {
     return indices;
 }
 
-void merge_insersion_sort(std::vector<Node*> v, std::vector<Node*> &res){
+void merge_insersion_sort_vector(std::vector<Node*> v, std::vector<Node*> &res){
 
     if (v.size() < 2) {
         res.push_back(v[0]);
@@ -58,6 +58,8 @@ void merge_insersion_sort(std::vector<Node*> v, std::vector<Node*> &res){
     }
 
     if (v.size() == 2) {
+        // count
+        count_vector++;
         if (v[0]->getNumber() > v[1]->getNumber()) {
             res.push_back(v[1]);
             res.push_back(v[0]);
@@ -74,8 +76,17 @@ void merge_insersion_sort(std::vector<Node*> v, std::vector<Node*> &res){
     std::vector < Node * >small;
     for (std::vector<Node*>::iterator it = v.begin(); it != v.end() - 1; ++it) {
         if (std::distance(it, v.begin()) % 2 == 0) {
-            std::vector<Node *>::iterator l_it = (*it)->getNumber() > (*(it + 1))->getNumber() ? it : (it + 1);
-            std::vector<Node *>::iterator s_it = !((*it)->getNumber() > (*(it + 1))->getNumber()) ? it : (it + 1);
+            std::vector<Node *>::iterator l_it;
+            std::vector<Node *>::iterator s_it;
+            // count
+            count_vector++;
+            if ((*it)->getNumber() > (*(it + 1))->getNumber()) {
+                l_it = it;
+                s_it = it + 1;
+            } else {
+                l_it = it + 1;
+                s_it = it;
+            }
             (*l_it)->setSmallerPair(*s_it);
             (*s_it)->setLargerPair(*l_it);
             large.push_back(*l_it);
@@ -84,23 +95,21 @@ void merge_insersion_sort(std::vector<Node*> v, std::vector<Node*> &res){
     if (v.size() % 2 == 1)
         large.push_back(v.back());
 
-    merge_insersion_sort(large, res);
+    merge_insersion_sort_vector(large, res);
     for (std::vector<Node *>::iterator it = res.begin(); it != res.end(); ++it) {
-        if (!(*it)->getSmallerPair().empty()) {
-            small.push_back((*it)->getSmallerPair().back());
+        if ((*it)->getSmallerPair() != NULL) {
+            small.push_back((*it)->getSmallerPair());
             (*it)->eraseSmallerPair();
         }
     }
 
 
     std::vector<int> indices = generate_indices(small.size());
-    std::cout << std::endl;
     int small_end = small.size() - 1;
     for (size_t i = 0; i < small.size(); ++i) {
         int geta = (indices[i] - 1) > small_end ? small_end-- : indices[i] - 1;
         std::vector<Node*>::iterator it = (small.begin() + geta);
         Node* smaller_pair = *it;
-        std::cout << "smaller_pair: " << smaller_pair->getNumber() << std::endl;
         Node* larger_pair = smaller_pair->getLargerPair();
 
         std::vector<Node*>::iterator res_pos;
@@ -115,6 +124,97 @@ void merge_insersion_sort(std::vector<Node*> v, std::vector<Node*> &res){
         std::vector<Node*>::iterator mid;
         while (begin <= end) {
             mid = begin + (end - begin) / 2;
+            // count
+            count_vector++;
+            if ((*mid)->getNumber() > smaller_pair->getNumber()) {
+                end = mid - 1;
+            } else {
+                begin = mid + 1;
+            }
+        }
+
+        smaller_pair->sorted();
+        res.insert(begin, smaller_pair);
+    }
+}
+
+
+void merge_insersion_sort_deque(std::deque<Node*> v, std::deque<Node*> &res){
+
+    if (v.size() < 2) {
+        res.push_back(v[0]);
+        return;
+    }
+
+    if (v.size() == 2) {
+        // count
+        count_deque++;
+        if (v[0]->getNumber() > v[1]->getNumber()) {
+            res.push_back(v[1]);
+            res.push_back(v[0]);
+        } else {
+            res.push_back(v[0]);
+            res.push_back(v[1]);
+        }
+        v[0]->sorted();
+        v[1]->sorted();
+        return;
+    }
+
+    std::deque < Node * >large;
+    std::deque < Node * >small;
+    for (std::deque<Node*>::iterator it = v.begin(); it != v.end() - 1; ++it) {
+        if (std::distance(it, v.begin()) % 2 == 0) {
+            std::deque<Node *>::iterator l_it;
+            std::deque<Node *>::iterator s_it;
+            // count
+            count_deque++;
+            if ((*it)->getNumber() > (*(it + 1))->getNumber()) {
+                l_it = it;
+                s_it = it + 1;
+            } else {
+                l_it = it + 1;
+                s_it = it;
+            }
+            (*l_it)->setSmallerPair(*s_it);
+            (*s_it)->setLargerPair(*l_it);
+            large.push_back(*l_it);
+        }
+    }
+    if (v.size() % 2 == 1)
+        large.push_back(v.back());
+
+    merge_insersion_sort_deque(large, res);
+    for (std::deque<Node *>::iterator it = res.begin(); it != res.end(); ++it) {
+        if ((*it)->getSmallerPair() != NULL) {
+            small.push_back((*it)->getSmallerPair());
+            (*it)->eraseSmallerPair();
+        }
+    }
+
+
+    std::vector<int> indices = generate_indices(small.size());
+    int small_end = small.size() - 1;
+    for (size_t i = 0; i < small.size(); ++i) {
+        int geta = (indices[i] - 1) > small_end ? small_end-- : indices[i] - 1;
+        std::deque<Node*>::iterator it = (small.begin() + geta);
+        Node* smaller_pair = *it;
+        Node* larger_pair = smaller_pair->getLargerPair();
+
+        std::deque<Node*>::iterator res_pos;
+        for (res_pos = res.begin(); res_pos != res.end(); ++res_pos) {
+            if (&*res_pos == &larger_pair) {
+                break;
+            }
+        }
+
+        std::deque<Node*>::iterator begin = res.begin();
+        std::deque<Node*>::iterator end = res_pos - 1;
+        std::deque<Node*>::iterator mid;
+        while (begin <= end) {
+            mid = begin + (end - begin) / 2;
+            // count
+            count_deque++;
             if ((*mid)->getNumber() > smaller_pair->getNumber()) {
                 end = mid - 1;
             } else {

@@ -13,7 +13,7 @@ class Node {
 
         // Member functions
         inline Node * & getLargerPair() { return _larger_pair; };
-        inline std::vector<Node *> & getSmallerPair() { return _smaller_pair; };
+        inline Node * & getSmallerPair() { return _smaller_pair.back(); };
         inline void setLargerPair(Node * n) {_larger_pair = n;};
         inline void setSmallerPair(Node * n) {_smaller_pair.push_back(n);};
         inline void eraseSmallerPair() {_smaller_pair.pop_back();}
@@ -21,12 +21,10 @@ class Node {
         inline void sorted() {_sorted = true;};
         inline bool isSorted() {return _sorted;};
 
-        //debug
-        void printNode(void);
     private:
         int _number;
         bool _sorted;
-        std::vector<Node *> _smaller_pair;
+        std::list<Node *> _smaller_pair;
         Node* _larger_pair;
 
         // Copy constructor and assignment operator
@@ -35,7 +33,12 @@ class Node {
         Node & operator=(const Node & rhs);
 };
 
-void merge_insersion_sort(std::vector<Node*> v, std::vector<Node*> &res);
+void merge_insersion_sort_vector(std::vector<Node*> v, std::vector<Node*> &res);
+void merge_insersion_sort_deque(std::deque<Node*> v, std::deque<Node*> &res);
+
+// count
+extern size_t count_vector;
+extern size_t count_deque;
 
 // colors
 # define END             "\033[0m"
