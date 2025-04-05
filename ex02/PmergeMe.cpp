@@ -22,18 +22,6 @@ Node & Node::operator=(const Node & rhs) {
     return *this;
 }
 
-// debug
-void Node::printNode(void) {
-    std::cout << "Node: " << _number << std::endl;
-    std::cout << "Larger pair: ";
-        std::cout << _larger_pair->getNumber() << " ";
-    std::cout << std::endl;
-    std::cout << "Smaller pair: ";
-    for (std::vector<Node *>::iterator it = _smaller_pair.begin(); it != _smaller_pair.end(); ++it) {
-        std::cout << (*it)->getNumber() << " ";
-    }
-    std::cout << std::endl;
-}
 
 std::vector<int> calculate_jacobsthal_sequence(int n) {
     std::vector<int> sequence(n + 1);
@@ -59,13 +47,13 @@ std::vector<int> generate_indices(int count) {
             indices[index++] = j;
         }
     }
-
     return indices;
 }
 
 void merge_insersion_sort(std::vector<Node*> v, std::vector<Node*> &res){
 
     if (v.size() < 2) {
+        res.push_back(v[0]);
         return;
     }
 
@@ -91,7 +79,6 @@ void merge_insersion_sort(std::vector<Node*> v, std::vector<Node*> &res){
             (*l_it)->setSmallerPair(*s_it);
             (*s_it)->setLargerPair(*l_it);
             large.push_back(*l_it);
-            // small.push_back(*s_it);
         }
     }
     if (v.size() % 2 == 1)
@@ -106,17 +93,7 @@ void merge_insersion_sort(std::vector<Node*> v, std::vector<Node*> &res){
     }
 
 
-
     std::vector<int> indices = generate_indices(small.size());
-    std::cout << "indices: ";
-    for (size_t i = 0; i < indices.size(); ++i) {
-        std::cout << indices[i] << " ";
-    }
-    std::cout << std::endl;
-    std::cout << "small: ";
-    for (size_t i = 0; i < small.size(); ++i) {
-        std::cout << small[i]->getNumber() << " ";
-    }
     std::cout << std::endl;
     int small_end = small.size() - 1;
     for (size_t i = 0; i < small.size(); ++i) {
