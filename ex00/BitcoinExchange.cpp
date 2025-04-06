@@ -100,7 +100,7 @@ bool BitcoinExchange::is_valid_value(std::string value) {
         return false;
 
     std::string::const_iterator it = value.begin() + 1;
-    if (!isdigit(*it) && *it != '.')
+    if (!isdigit(*it) && *it != '-' && *it != '.')
         return false;
     if (*it == '.')
         period = true;
