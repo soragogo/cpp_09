@@ -123,7 +123,7 @@ void merge_insersion_sort_vector(std::vector<Node*> v, std::vector<Node*> &res){
 
         std::vector<Node*>::iterator res_pos;
         for (res_pos = res.begin(); res_pos != res.end(); ++res_pos) {
-            if (&*res_pos == &larger_pair) break;
+            if (*res_pos == larger_pair) break;
         }
 
         std::vector<Node*>::iterator begin = res.begin();
@@ -219,7 +219,7 @@ void merge_insersion_sort_deque(std::deque<Node*> v, std::deque<Node*> &res){
 
         std::deque<Node*>::iterator res_pos;
         for (res_pos = res.begin(); res_pos != res.end(); ++res_pos) {
-            if (&*res_pos == &larger_pair) break;
+            if (*res_pos == larger_pair) break;
         }
 
         std::deque<Node*>::iterator begin = res.begin();
