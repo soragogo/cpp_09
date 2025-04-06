@@ -6,6 +6,7 @@
 #include <climits>  // INT_MAX
 #include <cstring>  // strcmp
 #include <sys/time.h>  // gettimeofday
+#include <algorithm>  // std::sort
 
 template <typename Container>
 int create_node(Container &c, int argc, char **argv) {
@@ -31,53 +32,28 @@ double elapsed_time(struct timeval start, struct timeval end) {
     return elapsed;
 }
 
-void print_debug(std::vector<Node *> &res_vector, std::deque<Node *> &res_deque, int argc) {
+void print_debug(std::vector<Node *> v, std::deque<Node *> d, std::vector<Node *> &res_vector, std::deque<Node *> &res_deque) {
 
 
-    int i = 0; int j = -1;
-    for (std::vector<Node *>::iterator it = res_vector.begin(); it != res_vector.end(); ++it) {
-    i = (*it)->getNumber();
-    std::cout << i << " ";
-    if (i < j) {
-        std::cout << RED << "KO" << END << std::endl;
-        break;
-    }
-    j = i;
-    }
+    std::sort(v.begin(), v.end());
+    std::sort(d.begin(), d.end());
+
     std::cout << std::endl;
 
-    std::cout << GREEN << "OK" << END << std::endl;
-    if ((unsigned long)(argc - 1) == res_vector.size()) {
-        std::cout << GREEN << "AND SIZE OK" << END << std::endl;
+    if (v == res_vector) {
+        std::cout << RED << "KO" << END << std::endl;
     } else {
-        std::cout << RED << "BUT SIZE KO" << END << std::endl;
+        std::cout << GREEN << "OK" << END << std::endl;
     }
 
+    if (d == res_deque) {
+        std::cout << RED << "KO" << END << std::endl;
+    } else {
+        std::cout << GREEN << "OK" << END << std::endl;
+    }
 
-    //deque
-    i = 0; j = -1;
-    for (std::deque<Node *>::iterator it = res_deque.begin(); it != res_deque.end(); ++it) {
-        i = (*it)->getNumber();
-        std::cout << i << " ";
-        if (i < j) {
-            std::cout << RED << "KO" << END << std::endl;
-            break;
-        }
-        j = i;
-
-    // count
-}
-
-std::cout << std::endl;
-std::cout << GREEN << "OK" << END << std::endl;
-if ((unsigned long)(argc - 1) == res_deque.size()) {
-    std::cout << GREEN << "AND SIZE OK" << END << std::endl;
-} else {
-    std::cout << RED << "BUT SIZE KO" << END << std::endl;
-}
-
-std::cout << BLUE << "Count of the comparison(vector): " << count_vector << END << std::endl;
-std::cout << BLUE << "Count of the comparison(deque): " << count_deque << END << std::endl;
+    std::cout << BLUE << "Count of the comparison(vector): " << count_vector << END << std::endl;
+    std::cout << BLUE << "Count of the comparison(deque): " << count_deque << END << std::endl;
 }
 
 size_t count_vector = 0;
@@ -125,7 +101,7 @@ int main(int argc, char **argv) {
     }
     std::cout << std::endl;
 
-    // print_debug(res_vector, res_deque, argc);
+    // print_debug(v, d, res_vector, res_deque);
 
     // time
     std::cout << "Time to process a range of " << (argc - 1) << " elements with std::vector : " << elapsed_time(start_v, end_v) << " us" << std::endl;
