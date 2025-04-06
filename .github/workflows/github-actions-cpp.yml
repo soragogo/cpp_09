@@ -13,6 +13,5 @@ jobs:
       - run: make -C ex01
       - run: ./ex01/RPN "4 2 *"
       - run: make fclean -C ex01
-      # - run: make -C ex02
-      # - run: ./ex02/ex02
-      # - run: make fclean -C ex02
+      - run: make -C ex02
+      - run: make fclean -C ex02

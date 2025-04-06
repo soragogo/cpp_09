@@ -137,3 +137,7 @@ int main(int argc, char **argv) {
     for (size_t j = 0; j < d.size(); j++) delete d[j];
 }
 
+// // memory leak確認
+// __attribute__((destructor)) void destructor() {
+//     system("leaks -q PmergeMe");
+// }
