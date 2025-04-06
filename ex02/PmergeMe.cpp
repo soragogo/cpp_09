@@ -92,8 +92,9 @@ void merge_insersion_sort_vector(std::vector<Node*> v, std::vector<Node*> &res){
             large.push_back(*l_it);
         }
     }
+    Node * leaf = NULL;
     if (v.size() % 2 == 1)
-        large.push_back(v.back());
+        leaf = v.back();
 
     merge_insersion_sort_vector(large, res);
     for (std::vector<Node *>::iterator it = res.begin(); it != res.end(); ++it) {
@@ -102,11 +103,19 @@ void merge_insersion_sort_vector(std::vector<Node*> v, std::vector<Node*> &res){
             (*it)->eraseSmallerPair();
         }
     }
+    if (leaf != NULL) small.push_back(leaf);
 
 
     std::vector<int> indices = generate_indices(small.size());
     int small_end = small.size() - 1;
     for (size_t i = 0; i < small.size(); ++i) {
+
+        if (i == 0) {
+            small[0]->sorted();
+            res.insert(res.begin(), small[0]);
+            continue;
+        }
+
         int geta = (indices[i] - 1) > small_end ? small_end-- : indices[i] - 1;
         std::vector<Node*>::iterator it = (small.begin() + geta);
         Node* smaller_pair = *it;
@@ -114,9 +123,7 @@ void merge_insersion_sort_vector(std::vector<Node*> v, std::vector<Node*> &res){
 
         std::vector<Node*>::iterator res_pos;
         for (res_pos = res.begin(); res_pos != res.end(); ++res_pos) {
-            if (&*res_pos == &larger_pair) {
-                break;
-            }
+            if (&*res_pos == &larger_pair) break;
         }
 
         std::vector<Node*>::iterator begin = res.begin();
@@ -181,8 +188,9 @@ void merge_insersion_sort_deque(std::deque<Node*> v, std::deque<Node*> &res){
             large.push_back(*l_it);
         }
     }
+    Node * leaf = NULL;
     if (v.size() % 2 == 1)
-        large.push_back(v.back());
+        leaf = v.back();
 
     merge_insersion_sort_deque(large, res);
     for (std::deque<Node *>::iterator it = res.begin(); it != res.end(); ++it) {
@@ -191,11 +199,19 @@ void merge_insersion_sort_deque(std::deque<Node*> v, std::deque<Node*> &res){
             (*it)->eraseSmallerPair();
         }
     }
+    if (leaf != NULL) small.push_back(leaf);
 
 
     std::vector<int> indices = generate_indices(small.size());
     int small_end = small.size() - 1;
     for (size_t i = 0; i < small.size(); ++i) {
+
+        if (i == 0) {
+            small[0]->sorted();
+            res.insert(res.begin(), small[0]);
+            continue;
+        }
+
         int geta = (indices[i] - 1) > small_end ? small_end-- : indices[i] - 1;
         std::deque<Node*>::iterator it = (small.begin() + geta);
         Node* smaller_pair = *it;
@@ -203,9 +219,7 @@ void merge_insersion_sort_deque(std::deque<Node*> v, std::deque<Node*> &res){
 
         std::deque<Node*>::iterator res_pos;
         for (res_pos = res.begin(); res_pos != res.end(); ++res_pos) {
-            if (&*res_pos == &larger_pair) {
-                break;
-            }
+            if (&*res_pos == &larger_pair) break;
         }
 
         std::deque<Node*>::iterator begin = res.begin();

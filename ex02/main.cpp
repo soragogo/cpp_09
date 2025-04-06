@@ -109,7 +109,7 @@ int main(int argc, char **argv) {
     gettimeofday(&end_d, NULL);
 
     std::cout << "Before: ";
-    for (int i = 1; i < (argc > 6 ? 6 : argc); i++) {
+    for (int i = 1; i < (argc > 6 ? 5 : argc); i++) {
         std::cout << argv[i] << " ";
     }
     if (argc > 6) {
@@ -117,7 +117,7 @@ int main(int argc, char **argv) {
     }
     std::cout << std::endl;
     std::cout << "After: ";
-    for (int i = 0; i < (argc > 6 ? 6 : argc - 1); i++) {
+    for (int i = 0; i < (argc > 6 ? 5 : argc - 1); i++) {
         std::cout << res_vector[i]->getNumber() << " ";
     }
     if (argc > 6) {
