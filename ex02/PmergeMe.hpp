@@ -2,6 +2,7 @@
 # define PMERGEME_HPP
 
 #include <vector>
+#include <deque>
 #include <list>
 #include <iostream>
 

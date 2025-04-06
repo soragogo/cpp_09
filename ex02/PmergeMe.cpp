@@ -1,9 +1,9 @@
 #include "PmergeMe.hpp"
 
 // Node class constructor and destructor
-Node::Node(const int & i) : _number(i), _sorted(false) {};
+Node::Node(const int & i) : _number(i), _sorted(false) {}
 
-Node::Node(void) : _number(-1), _sorted(false) {};
+Node::Node(void) : _number(-1), _sorted(false) {}
 
 Node::~Node() {}
 
