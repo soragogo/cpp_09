@@ -32,24 +32,27 @@ double elapsed_time(struct timeval start, struct timeval end) {
     return elapsed;
 }
 
+struct NodeComparator {
+    bool operator()(Node *a, Node *b) const {
+        return a->getNumber() < b->getNumber();
+    }
+};
+
 void print_debug(std::vector<Node *> v, std::deque<Node *> d, std::vector<Node *> &res_vector, std::deque<Node *> &res_deque) {
 
 
-    std::sort(v.begin(), v.end());
-    std::sort(d.begin(), d.end());
-
-    std::cout << std::endl;
-
+    std::sort(v.begin(), v.end(), NodeComparator());
+    std::sort(d.begin(), d.end(), NodeComparator());
+    
     if (v == res_vector) {
-        std::cout << RED << "KO" << END << std::endl;
+        std::cout << GREEN << "OK: vector" << END << std::endl;
     } else {
-        std::cout << GREEN << "OK" << END << std::endl;
+        std::cout << RED << "Error: vector" << END << std::endl;
     }
-
     if (d == res_deque) {
-        std::cout << RED << "KO" << END << std::endl;
+        std::cout << GREEN << "OK: deque" << END << std::endl;
     } else {
-        std::cout << GREEN << "OK" << END << std::endl;
+        std::cout << RED << "Error: deque" << END << std::endl;
     }
 
     std::cout << BLUE << "Count of the comparison(vector): " << count_vector << END << std::endl;
@@ -95,7 +98,7 @@ int main(int argc, char **argv) {
     }
     std::cout << std::endl;
 
-    // print_debug(v, d, res_vector, res_deque);
+    print_debug(v, d, res_vector, res_deque);
 
     // time
     std::cout << "Time to process a range of " << (argc - 1) << " elements with std::vector : " << elapsed_time(start_v, end_v) << " us" << std::endl;
