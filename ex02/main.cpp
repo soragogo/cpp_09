@@ -8,7 +8,7 @@
 #include <sys/time.h>  // gettimeofday
 #include <algorithm>  // std::sort
 
-template <typename Container, typename Node>
+template <typename Container>
 int create_node(Container &c, int argc, char **argv) {
 
     if (argc < 2) return 1;
@@ -32,67 +32,60 @@ double elapsed_time(struct timeval start, struct timeval end) {
     return elapsed;
 }
 
-template <typename Node>
 struct NodeComparator {
     bool operator()(Node *a, Node *b) const {
         return a->getNumber() < b->getNumber();
     }
 };
 
-Node_l * access_list(std::list<Node_l *> &l, int i) {
-    std::list<Node_l *>::iterator it = l.begin();
-    std::advance(it, i);
-    return *it;
-}
-
-void print_debug(std::vector<Node_v *> v, std::list<Node_l *> l, std::vector<Node_v *> &res_vector, std::list<Node_l *> &res_list) {
+void print_debug(std::vector<Node *> v, std::deque<Node *> d, std::vector<Node *> &res_vector, std::deque<Node *> &res_deque) {
 
 
-    std::sort(v.begin(), v.end(), NodeComparator<Node_v>());
-    std::sort(l.begin(), l.end(), NodeComparator<Node_l>());
-
+    std::sort(v.begin(), v.end(), NodeComparator());
+    std::sort(d.begin(), d.end(), NodeComparator());
+    
     if (v == res_vector) {
         std::cout << GREEN << "OK: vector" << END << std::endl;
     } else {
         std::cout << RED << "Error: vector" << END << std::endl;
     }
-    if (l == res_list) {
+    if (d == res_deque) {
         std::cout << GREEN << "OK: deque" << END << std::endl;
     } else {
         std::cout << RED << "Error: deque" << END << std::endl;
     }
 
     std::cout << BLUE << "Count of the comparison(vector): " << count_vector << END << std::endl;
-    std::cout << BLUE << "Count of the comparison(deque): " << count_list << END << std::endl;
+    std::cout << BLUE << "Count of the comparison(deque): " << count_deque << END << std::endl;
 }
 
 size_t count_vector = 0;
-size_t count_list = 0;
+size_t count_deque = 0;
 
 int main(int argc, char **argv) {
-    std::vector<Node_v *> v;
-    std::list<Node_l *> l;
+    std::vector<Node *> v;
+    std::deque<Node *> d;
 
-    if (create_node<std::vector<Node_v *>, Node_v>(v, argc, argv) == 1 || create_node<std::list<Node_l *>, Node_l>(l, argc, argv) == 1) {
+    if (create_node(v, argc, argv) == 1 || create_node(d, argc, argv) == 1) {
         std::cout << "Error" << std::endl;
         for (size_t j = 0; j < v.size(); j++) delete v[j];
-        for (size_t j = 0; j < l.size(); j++) delete access_list(l, j);
+        for (size_t j = 0; j < d.size(); j++) delete d[j];
         return 1;
+    }
 
-
-    std::vector<Node_v *> res_vector;
-    std::list<Node_l *> res_list;
+    std::vector<Node *> res_vector;
+    std::deque<Node *> res_deque;
 
     struct timeval start_v, end_v;
-    struct timeval start_l, end_l;
+    struct timeval start_d, end_d;
 
     gettimeofday(&start_v, NULL);
     merge_insersion_sort_vector(v, res_vector);
     gettimeofday(&end_v, NULL);
 
-    gettimeofday(&start_l, NULL);
-    merge_insersion_sort_list(l, res_list);
-    gettimeofday(&end_l, NULL);
+    gettimeofday(&start_d, NULL);
+    merge_insersion_sort_deque(d, res_deque);
+    gettimeofday(&end_d, NULL);
 
     std::cout << "Before: ";
     for (int i = 1; i < argc; i++) {
@@ -105,16 +98,16 @@ int main(int argc, char **argv) {
     }
     std::cout << std::endl;
 
-    print_debug(v, l, res_vector, res_list);
+    print_debug(v, d, res_vector, res_deque);
 
     // time
     std::cout << "Time to process a range of " << (argc - 1) << " elements with std::vector : " << elapsed_time(start_v, end_v) << " us" << std::endl;
-    std::cout << "Time to process a range of " << (argc - 1) << " elements with std::deque : " << elapsed_time(start_l, end_l) << " us" << std::endl;
+    std::cout << "Time to process a range of " << (argc - 1) << " elements with std::deque : " << elapsed_time(start_d, end_d) << " us" << std::endl;
 
 
     // free memory
     for (size_t j = 0; j < v.size(); j++) delete v[j];
-    for (size_t j = 0; j < l.size(); j++) delete access_list(l, j);
+    for (size_t j = 0; j < d.size(); j++) delete d[j];
 }
 
 // // memory leak確認
