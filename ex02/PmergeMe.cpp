@@ -60,7 +60,7 @@ void merge_insersion_sort_vector(std::vector<Node*> v, std::vector<Node*> &res){
     if (v.size() == 2) {
         // count
         count_vector++;
-        if (v[0]->getNumber() > v[1]->getNumber()) {
+        if (*v[0] > *v[1]) {
             res.push_back(v[1]);
             res.push_back(v[0]);
         } else {
@@ -80,7 +80,7 @@ void merge_insersion_sort_vector(std::vector<Node*> v, std::vector<Node*> &res){
             std::vector<Node *>::iterator s_it;
             // count
             count_vector++;
-            if ((*it)->getNumber() > (*(it + 1))->getNumber()) {
+            if (*(*it) > (*(*(it + 1)))) {
                 l_it = it;
                 s_it = it + 1;
             } else {
@@ -133,7 +133,7 @@ void merge_insersion_sort_vector(std::vector<Node*> v, std::vector<Node*> &res){
             mid = begin + (end - begin) / 2;
             // count
             count_vector++;
-            if ((*mid)->getNumber() > smaller_pair->getNumber()) {
+            if (*(*mid) > *smaller_pair) {
                 end = mid - 1;
             } else {
                 begin = mid + 1;
@@ -156,7 +156,7 @@ void merge_insersion_sort_deque(std::deque<Node*> v, std::deque<Node*> &res){
     if (v.size() == 2) {
         // count
         count_deque++;
-        if (v[0]->getNumber() > v[1]->getNumber()) {
+        if (*v[0] > *v[1]) {
             res.push_back(v[1]);
             res.push_back(v[0]);
         } else {
@@ -176,7 +176,7 @@ void merge_insersion_sort_deque(std::deque<Node*> v, std::deque<Node*> &res){
             std::deque<Node *>::iterator s_it;
             // count
             count_deque++;
-            if ((*it)->getNumber() > (*(it + 1))->getNumber()) {
+            if (*(*it) > (*(*(it + 1)))) {
                 l_it = it;
                 s_it = it + 1;
             } else {
@@ -229,7 +229,7 @@ void merge_insersion_sort_deque(std::deque<Node*> v, std::deque<Node*> &res){
             mid = begin + (end - begin) / 2;
             // count
             count_deque++;
-            if ((*mid)->getNumber() > smaller_pair->getNumber()) {
+            if (*(*mid) > *smaller_pair) {
                 end = mid - 1;
             } else {
                 begin = mid + 1;

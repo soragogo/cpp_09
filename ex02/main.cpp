@@ -34,7 +34,7 @@ double elapsed_time(struct timeval start, struct timeval end) {
 
 struct NodeComparator {
     bool operator()(Node *a, Node *b) const {
-        return a->getNumber() < b->getNumber();
+        return *a < *b;
     }
 };
 
@@ -45,14 +45,14 @@ void print_debug(std::vector<Node *> v, std::deque<Node *> d, std::vector<Node *
     std::sort(d.begin(), d.end(), NodeComparator());
 
     for (size_t i = 0; i < v.size(); i++) {
-        if (v[i]->getNumber() != res_vector[i]->getNumber()) {
+        if (*v[i] != *res_vector[i]) {
             std::cout << RED << "Error: vector" << END << std::endl;
             break;
         }
     }
 
     for (size_t i = 0; i < d.size(); i++) {
-        if (d[i]->getNumber() != res_deque[i]->getNumber()) {
+        if (*d[i] != *res_deque[i]) {
             std::cout << RED << "Error: deque" << END << std::endl;
             break;
         }
@@ -97,7 +97,7 @@ int main(int argc, char **argv) {
     std::cout << std::endl;
     std::cout << "After: ";
     for (size_t i = 0; i < res_vector.size(); i++) {
-        std::cout << res_vector[i]->getNumber() << " ";
+        std::cout << *res_vector[i] << " ";
     }
     std::cout << std::endl;
 

@@ -18,9 +18,10 @@ class Node {
         inline void setLargerPair(Node * n) {_larger_pair = n;};
         inline void setSmallerPair(Node * n) {_smaller_pair.push_back(n);};
         inline void eraseSmallerPair() {_smaller_pair.pop_back();}
-        inline int const & getNumber() {return _number;};
         inline void sorted() {_sorted = true;};
         inline bool isSorted() {return _sorted;};
+
+        inline operator int() const { return _number; }
 
     private:
         int _number;
