@@ -38,11 +38,11 @@ struct NodeComparator {
     }
 };
 
-void print_debug(std::vector<Node *> v, std::deque<Node *> d, std::vector<Node *> &res_vector, std::deque<Node *> &res_deque) {
+void print_debug(std::vector<Node *> v, std::list<Node *> l, std::vector<Node *> &res_vector, std::list<Node *> &res_list) {
 
 
     std::sort(v.begin(), v.end(), NodeComparator());
-    std::sort(d.begin(), d.end(), NodeComparator());
+    l.sort(NodeComparator());
 
     int error = 0;
     for (size_t i = 0; i < v.size(); i++) {
@@ -53,9 +53,9 @@ void print_debug(std::vector<Node *> v, std::deque<Node *> d, std::vector<Node *
         }
     }
 
-    for (size_t i = 0; i < d.size(); i++) {
-        if (*d[i] != *res_deque[i]) {
-            std::cout << RED << "Error: deque" << END << std::endl;
+    for (size_t i = 0; i < l.size(); i++) {
+        if (*access_list(l, i) != *access_list(res_list, i)) {
+            std::cout << RED << "Error: list" << END << std::endl;
             error = 1;
             break;
         }
@@ -63,58 +63,64 @@ void print_debug(std::vector<Node *> v, std::deque<Node *> d, std::vector<Node *
     if (!error) std::cout << GREEN << "Sort success" << END << std::endl;
 
     std::cout << BLUE << "Count of the comparison(vector): " << count_vector << END << std::endl;
-    std::cout << BLUE << "Count of the comparison(deque): " << count_deque << END << std::endl;
+    std::cout << BLUE << "Count of the comparison(list): " << count_list << END << std::endl;
 }
 
 size_t count_vector = 0;
-size_t count_deque = 0;
+size_t count_list = 0;
 
 int main(int argc, char **argv) {
     std::vector<Node *> v;
-    std::deque<Node *> d;
+    std::list<Node *> l;
 
-    if (create_node(v, argc, argv) == 1 || create_node(d, argc, argv) == 1) {
+    if (create_node(v, argc, argv) == 1 || create_node(l, argc, argv) == 1) {
         std::cout << "Error" << std::endl;
         for (size_t j = 0; j < v.size(); j++) delete v[j];
-        for (size_t j = 0; j < d.size(); j++) delete d[j];
+        for (size_t j = 0; j < l.size(); j++) delete access_list(l, j);
         return 1;
     }
 
     std::vector<Node *> res_vector;
-    std::deque<Node *> res_deque;
+    std::list<Node *> res_list;
 
     struct timeval start_v, end_v;
-    struct timeval start_d, end_d;
+    struct timeval start_l, end_l;
 
     gettimeofday(&start_v, NULL);
     merge_insersion_sort_vector(v, res_vector);
     gettimeofday(&end_v, NULL);
 
-    gettimeofday(&start_d, NULL);
-    merge_insersion_sort_deque(d, res_deque);
-    gettimeofday(&end_d, NULL);
-
-    std::cout << "Before: ";
-    for (int i = 1; i < argc; i++) {
-        std::cout << argv[i] << " ";
-    }
-    std::cout << std::endl;
-    std::cout << "After: ";
-    for (size_t i = 0; i < res_vector.size(); i++) {
-        std::cout << *res_vector[i] << " ";
-    }
+    gettimeofday(&start_l, NULL);
+    merge_insersion_sort_list(l, res_list);
+    gettimeofday(&end_l, NULL);
     std::cout << std::endl;
 
-    print_debug(v, d, res_vector, res_deque);
+    // std::cout << "Before: ";
+    // for (int i = 1; i < argc; i++) {
+    //     std::cout << argv[i] << " ";
+    // }
+    // std::cout << std::endl;
+    // std::cout << "[vector] After: ";
+    // for (size_t i = 0; i < res_vector.size(); i++) {
+    //     std::cout << *res_vector[i] << " ";
+    // }
+    // std::cout << std::endl;
+    // std::cout << "[list] After : ";
+    // for (size_t i = 0; i < res_list.size(); i++) {
+    //     std::cout << *access_list(res_list, i) << " ";
+    // }
+    // std::cout << std::endl;
+
+    print_debug(v, l, res_vector, res_list);
 
     // time
     std::cout << "Time to process a range of " << (argc - 1) << " elements with std::vector : " << elapsed_time(start_v, end_v) << " us" << std::endl;
-    std::cout << "Time to process a range of " << (argc - 1) << " elements with std::deque : " << elapsed_time(start_d, end_d) << " us" << std::endl;
+    std::cout << "Time to process a range of " << (argc - 1) << " elements with std::list : " << elapsed_time(start_l, end_l) << " us" << std::endl;
 
 
     // free memory
     for (size_t j = 0; j < v.size(); j++) delete v[j];
-    for (size_t j = 0; j < d.size(); j++) delete d[j];
+    for (size_t j = 0; j < l.size(); j++) delete access_list(l, j);
 }
 
 // // memory leak確認

@@ -13,8 +13,12 @@ class Node {
         ~Node();
 
         // Member functions
-        inline Node * & getLargerPair() { return _larger_pair; };
-        inline Node * & getSmallerPair() { return _smaller_pair.back(); };
+        inline Node *  getLargerPair() { return _larger_pair; };
+        inline Node *  getSmallerPair()
+        {
+            if (_smaller_pair.empty()) return NULL;
+            return _smaller_pair.back();
+        };
         inline void setLargerPair(Node * n) {_larger_pair = n;};
         inline void setSmallerPair(Node * n) {_smaller_pair.push_back(n);};
         inline void eraseSmallerPair() {_smaller_pair.pop_back();}
@@ -35,12 +39,22 @@ class Node {
         Node & operator=(const Node & rhs);
 };
 
+inline Node * access_list(std::list<Node*> &l, int i) {
+    std::list<Node*>::iterator it = l.begin();
+    if ((size_t)i < 0 || (size_t)i >= l.size()) {
+        std::cerr << "Index out of range" << std::endl;
+        return NULL;
+    }
+    std::advance(it, i);
+    return *it;
+}
+
 void merge_insersion_sort_vector(std::vector<Node*> v, std::vector<Node*> &res);
-void merge_insersion_sort_deque(std::deque<Node*> v, std::deque<Node*> &res);
+void merge_insersion_sort_list(std::list<Node*> v, std::list<Node*> &res);
 
 // count
 extern size_t count_vector;
-extern size_t count_deque;
+extern size_t count_list;
 
 // colors
 # define END             "\033[0m"
