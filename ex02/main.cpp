@@ -44,9 +44,11 @@ void print_debug(std::vector<Node *> v, std::deque<Node *> d, std::vector<Node *
     std::sort(v.begin(), v.end(), NodeComparator());
     std::sort(d.begin(), d.end(), NodeComparator());
 
+    int error = 0;
     for (size_t i = 0; i < v.size(); i++) {
         if (*v[i] != *res_vector[i]) {
             std::cout << RED << "Error: vector" << END << std::endl;
+            error = 1;
             break;
         }
     }
@@ -54,9 +56,11 @@ void print_debug(std::vector<Node *> v, std::deque<Node *> d, std::vector<Node *
     for (size_t i = 0; i < d.size(); i++) {
         if (*d[i] != *res_deque[i]) {
             std::cout << RED << "Error: deque" << END << std::endl;
+            error = 1;
             break;
         }
     }
+    if (!error) std::cout << GREEN << "Sort success" << END << std::endl;
 
     std::cout << BLUE << "Count of the comparison(vector): " << count_vector << END << std::endl;
     std::cout << BLUE << "Count of the comparison(deque): " << count_deque << END << std::endl;

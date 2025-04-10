@@ -26,7 +26,7 @@ class Node {
     private:
         int _number;
         bool _sorted;
-        std::list<Node *> _smaller_pair;
+        std::vector<Node *> _smaller_pair;
         Node* _larger_pair;
 
         // Copy constructor and assignment operator
