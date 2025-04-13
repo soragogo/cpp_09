@@ -28,7 +28,7 @@ int create_node(Container &c, int argc, char **argv) {
 double elapsed_time(struct timeval start, struct timeval end) {
     long seconds = end.tv_sec - start.tv_sec;
     long microseconds = end.tv_usec - start.tv_usec;
-    double elapsed = seconds * 1000.0 + microseconds / 1000.0;
+    double elapsed = seconds * 1000000.0 + microseconds;
     return elapsed;
 }
 
