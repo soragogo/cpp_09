@@ -1,15 +1,74 @@
 #include "PmergeMe.hpp"
 
+Node * access_list(std::list<Node*> &l, int i) {
+    std::list<Node*>::iterator it = l.begin();
+    if ((size_t)i < 0 || (size_t)i >= l.size()) {
+        std::cerr << "Index out of range" << std::endl;
+        return NULL;
+    }
+    std::advance(it, i);
+    return *it;
+}
+
 // Node class constructor and destructor
 Node::Node(const int & i) : _number(i), _sorted(false) {}
 
 Node::Node(void) : _number(-1), _sorted(false) {}
 
-Node::~Node() {}
-
-// Copy constructor and assignment operator
 Node::Node(const Node & src) {
     *this = src;
+}
+
+Node::~Node() {}
+
+Node * Node::getLargerPair() {
+    return _larger_pair;
+}
+
+Node * Node::getSmallerPairV() {
+    if (_smaller_pair_v.empty()) return NULL;
+    return _smaller_pair_v.back();
+}
+
+Node * Node::getSmallerPairL() {
+    if (_smaller_pair_l.empty()) return NULL;
+    return _smaller_pair_l.back();
+}
+
+void Node::setLargerPair(Node * n) {
+    _larger_pair = n;
+}
+
+void Node::setSmallerPairV(Node * n) {
+    _smaller_pair_v.push_back(n);
+}
+
+void Node::setSmallerPairL(Node * n) {
+    _smaller_pair_l.push_back(n);
+}
+
+void Node::eraseSmallerPairV() {
+    if (!_smaller_pair_v.empty()) {
+        _smaller_pair_v.pop_back();
+    }
+}
+
+void Node::eraseSmallerPairL() {
+    if (!_smaller_pair_l.empty()) {
+        _smaller_pair_l.pop_back();
+    }
+}
+
+void Node::sorted() {
+    _sorted = true;
+}
+
+bool Node::isSorted() {
+    return _sorted;
+}
+
+Node::operator int() const {
+    return _number;
 }
 
 Node & Node::operator=(const Node & rhs) {
@@ -231,7 +290,7 @@ void merge_insersion_sort_list(std::list<Node*> l, std::list<Node*> &res){
         std::list<Node*>::iterator begin = res.begin();
         std::list<Node*>::iterator end = res_pos;
         --end;
-        
+
         std::list<Node*>::iterator mid;
 
         while (std::distance(res.begin(), begin) <= std::distance(res.begin(), end)) {

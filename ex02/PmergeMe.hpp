@@ -13,26 +13,18 @@ class Node {
         ~Node();
 
         // Member functions
-        inline Node *  getLargerPair() { return _larger_pair; };
-        inline Node *  getSmallerPairV()
-        {
-            if (_smaller_pair_v.empty()) return NULL;
-            return _smaller_pair_v.back();
-        };
-        inline Node *  getSmallerPairL()
-        {
-            if (_smaller_pair_l.empty()) return NULL;
-            return _smaller_pair_l.back();
-        };
-        inline void setLargerPair(Node * n) {_larger_pair = n;};
-        inline void setSmallerPairV(Node * n) {_smaller_pair_v.push_back(n);};
-        inline void setSmallerPairL(Node * n) {_smaller_pair_l.push_back(n);};
-        inline void eraseSmallerPairV() {_smaller_pair_v.pop_back();}
-        inline void eraseSmallerPairL() {_smaller_pair_l.pop_back();}
-        inline void sorted() {_sorted = true;};
-        inline bool isSorted() {return _sorted;};
+        Node *  getLargerPair();
+        Node *  getSmallerPairV();
+        Node *  getSmallerPairL();
+        void setLargerPair(Node * n);
+        void setSmallerPairV(Node * n);
+        void setSmallerPairL(Node * n);
+        void eraseSmallerPairV();
+        void eraseSmallerPairL();
+        void sorted();
+        bool isSorted();
 
-        inline operator int() const { return _number; }
+        operator int() const;
 
     private:
         int _number;
@@ -47,15 +39,7 @@ class Node {
         Node & operator=(const Node & rhs);
 };
 
-inline Node * access_list(std::list<Node*> &l, int i) {
-    std::list<Node*>::iterator it = l.begin();
-    if ((size_t)i < 0 || (size_t)i >= l.size()) {
-        std::cerr << "Index out of range" << std::endl;
-        return NULL;
-    }
-    std::advance(it, i);
-    return *it;
-}
+Node * access_list(std::list<Node*> &l, int i);
 
 void merge_insersion_sort_vector(std::vector<Node*> v, std::vector<Node*> &res);
 void merge_insersion_sort_list(std::list<Node*> v, std::list<Node*> &res);
