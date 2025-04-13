@@ -95,21 +95,21 @@ int main(int argc, char **argv) {
     gettimeofday(&end_l, NULL);
     std::cout << std::endl;
 
-    // std::cout << "Before: ";
-    // for (int i = 1; i < argc; i++) {
-    //     std::cout << argv[i] << " ";
-    // }
-    // std::cout << std::endl;
-    // std::cout << "[vector] After: ";
-    // for (size_t i = 0; i < res_vector.size(); i++) {
-    //     std::cout << *res_vector[i] << " ";
-    // }
+    std::cout << "Before: ";
+    for (int i = 1; i < argc; i++) {
+        std::cout << argv[i] << " ";
+    }
+    std::cout << std::endl;
+    std::cout << "After: ";
+    for (size_t i = 0; i < res_vector.size(); i++) {
+        std::cout << *res_vector[i] << " ";
+    }
     // std::cout << std::endl;
     // std::cout << "[list] After : ";
     // for (size_t i = 0; i < res_list.size(); i++) {
     //     std::cout << *access_list(res_list, i) << " ";
     // }
-    // std::cout << std::endl;
+    std::cout << std::endl;
 
     print_debug(v, l, res_vector, res_list);
 
