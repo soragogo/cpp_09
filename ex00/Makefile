@@ -29,7 +29,7 @@ fclean:clean
 re:fclean
 	make all
 
-debug: CXXFLAGS += -g -O0 -fsanitize=address
+debug: CXXFLAGS += -g -O0 -fsanitize=address -pedantic-errors
 debug: fclean all
 	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
 

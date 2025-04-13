@@ -2,9 +2,9 @@
 
 RPN::RPN() : _f("") {}
 
-RPN::RPN(std::string const & f) : _f(f) {};
+RPN::RPN(std::string const & f) : _f(f) {}
 
-RPN::~RPN() {};
+RPN::~RPN() {}
 
 RPN::RPN(RPN const & rpn) {
     (void)rpn;
