@@ -17,7 +17,8 @@ Node & Node::operator=(const Node & rhs) {
         this->_number = rhs._number;
         this->_sorted = rhs._sorted;
         this->_larger_pair = rhs._larger_pair;
-        this->_smaller_pair = rhs._smaller_pair;
+        this->_smaller_pair_v = rhs._smaller_pair_v;
+        this->_smaller_pair_l = rhs._smaller_pair_l;
     }
     return *this;
 }
@@ -87,7 +88,7 @@ void merge_insersion_sort_vector(std::vector<Node*> v, std::vector<Node*> &res){
                 l_it = it + 1;
                 s_it = it;
             }
-            (*l_it)->setSmallerPair(*s_it);
+            (*l_it)->setSmallerPairV(*s_it);
             (*s_it)->setLargerPair(*l_it);
             large.push_back(*l_it);
         }
@@ -98,9 +99,9 @@ void merge_insersion_sort_vector(std::vector<Node*> v, std::vector<Node*> &res){
 
     merge_insersion_sort_vector(large, res);
     for (std::vector<Node *>::iterator it = res.begin(); it != res.end(); ++it) {
-        if ((*it)->getSmallerPair() != NULL) {
-            small.push_back((*it)->getSmallerPair());
-            (*it)->eraseSmallerPair();
+        if ((*it)->getSmallerPairV() != NULL) {
+            small.push_back((*it)->getSmallerPairV());
+            (*it)->eraseSmallerPairV();
         }
     }
     if (leaf != NULL) small.push_back(leaf);
@@ -187,7 +188,7 @@ void merge_insersion_sort_list(std::list<Node*> l, std::list<Node*> &res){
                 l_it = next_it;
                 s_it = it;
             }
-            (*l_it)->setSmallerPair(*s_it);
+            (*l_it)->setSmallerPairL(*s_it);
             (*s_it)->setLargerPair(*l_it);
             large.push_back(*l_it);
         }
@@ -198,9 +199,9 @@ void merge_insersion_sort_list(std::list<Node*> l, std::list<Node*> &res){
 
     merge_insersion_sort_list(large, res);
     for (std::list<Node *>::iterator it = res.begin(); it != res.end(); ++it) {
-        if ((*it)->getSmallerPair() != NULL) {
-            small.push_back((*it)->getSmallerPair());
-            (*it)->eraseSmallerPair();
+        if ((*it)->getSmallerPairL() != NULL) {
+            small.push_back((*it)->getSmallerPairL());
+            (*it)->eraseSmallerPairL();
         }
     }
     if (leaf != NULL) small.push_back(leaf);

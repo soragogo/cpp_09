@@ -14,14 +14,21 @@ class Node {
 
         // Member functions
         inline Node *  getLargerPair() { return _larger_pair; };
-        inline Node *  getSmallerPair()
+        inline Node *  getSmallerPairV()
         {
-            if (_smaller_pair.empty()) return NULL;
-            return _smaller_pair.back();
+            if (_smaller_pair_v.empty()) return NULL;
+            return _smaller_pair_v.back();
+        };
+        inline Node *  getSmallerPairL()
+        {
+            if (_smaller_pair_l.empty()) return NULL;
+            return _smaller_pair_l.back();
         };
         inline void setLargerPair(Node * n) {_larger_pair = n;};
-        inline void setSmallerPair(Node * n) {_smaller_pair.push_back(n);};
-        inline void eraseSmallerPair() {_smaller_pair.pop_back();}
+        inline void setSmallerPairV(Node * n) {_smaller_pair_v.push_back(n);};
+        inline void setSmallerPairL(Node * n) {_smaller_pair_l.push_back(n);};
+        inline void eraseSmallerPairV() {_smaller_pair_v.pop_back();}
+        inline void eraseSmallerPairL() {_smaller_pair_l.pop_back();}
         inline void sorted() {_sorted = true;};
         inline bool isSorted() {return _sorted;};
 
@@ -30,7 +37,8 @@ class Node {
     private:
         int _number;
         bool _sorted;
-        std::vector<Node *> _smaller_pair;
+        std::vector<Node *> _smaller_pair_v;
+        std::list<Node *> _smaller_pair_l;
         Node* _larger_pair;
 
         // Copy constructor and assignment operator
