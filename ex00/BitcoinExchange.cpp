@@ -5,6 +5,18 @@ BitcoinExchange::BitcoinExchange(){
     load_data();
 }
 
+BitcoinExchange::~BitcoinExchange(){
+}
+
+BitcoinExchange::BitcoinExchange(BitcoinExchange const & bce) {
+    (void)bce;
+}
+
+BitcoinExchange & BitcoinExchange::operator=(BitcoinExchange const & bce) {
+    (void)bce;
+    return (*this);
+}
+
 void BitcoinExchange::load_data() {
     std::ifstream data_file("data.csv");
     std::string line;
