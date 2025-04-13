@@ -1,5 +1,20 @@
 #include "RPN.hpp"
 
+RPN::RPN() : _f("") {}
+
+RPN::RPN(std::string const & f) : _f(f) {};
+
+RPN::~RPN() {};
+
+RPN::RPN(RPN const & rpn) {
+    (void)rpn;
+}
+
+RPN & RPN::operator=(RPN const & rpn) {
+    (void)rpn;
+    return (*this);
+}
+
 void RPN::arithmetic(char const & c) {
     if (_s.size() < 2) throw std::runtime_error("Error");
 

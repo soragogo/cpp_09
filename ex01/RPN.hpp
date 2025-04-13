@@ -6,15 +6,15 @@
 #include <stack>
 class RPN {
 public:
-    RPN(std::string const & f) : _f(f) {};
-    ~RPN() {};
+    RPN(std::string const & f);
+    ~RPN();
     void caliculate();
 private:
     std::string _f;
     std::stack<int> _s;
     RPN();
-    RPN(RPN const & rpn) {(void)rpn;};
-    RPN & operator=(RPN const & rpn) {(void)rpn; return *this;};
+    RPN(RPN const & rpn);
+    RPN & operator=(RPN const & rpn);
     void arithmetic(char const & c);
 };
 
