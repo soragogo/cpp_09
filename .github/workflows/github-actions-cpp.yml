@@ -8,10 +8,10 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - run: make -C ex00
+      - run: make debug -C ex00
       - run: make fclean -C ex00
-      - run: make -C ex01
+      - run: make debug -C ex01
       - run: ./ex01/RPN "4 2 *"
       - run: make fclean -C ex01
-      - run: make -C ex02
+      - run: make debug -C ex02
       - run: make fclean -C ex02
