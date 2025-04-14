@@ -64,7 +64,9 @@ bool BitcoinExchange::is_number(const std::string& s) {
 
 bool BitcoinExchange::is_on_calendar(int const & year, int const & month, int const & day) {
     const int MONTH_DAYS[13] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-    if (year % 4 == 0 && month == 2) {
+
+    bool is_leap_year = (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
+    if (is_leap_year && month == 2) {
         if (day > 29) return false;
     }
     else if (day > MONTH_DAYS[month])
@@ -89,7 +91,7 @@ bool BitcoinExchange::is_valid_date(std::string date) {
     if (!is_number(year_str) || !is_number(month_str) || !is_number(day_str))
         return false;
 
-    if (year_str < "2009" || "2026" < year_str
+    if (year_str < "2009" || "9999" < year_str
         || month_str < "01" || "12" < month_str
         || day_str < "01" || "31" < day_str)
         return false;
