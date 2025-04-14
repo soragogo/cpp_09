@@ -1,6 +1,8 @@
 #ifndef PMERGEME_HPP
 # define PMERGEME_HPP
 
+// # define DEBUG 0
+
 #include <vector>
 #include <deque>
 #include <list>

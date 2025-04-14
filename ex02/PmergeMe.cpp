@@ -1,5 +1,16 @@
 #include "PmergeMe.hpp"
 
+
+#ifdef DEBUG
+void print_vector(std::vector<Node *> v, std::string str) {
+    std::cout << "   " << str << " ";
+    for (size_t i = 0; i < v.size(); i++) {
+        std::cout << "[" <<*v[i] << "] ";
+    }
+    std::cout << std::endl;
+}
+#endif
+
 Node * access_list(std::list<Node*> &l, int i) {
     std::list<Node*>::iterator it = l.begin();
     if ((size_t)i < 0 || (size_t)i >= l.size()) {
@@ -112,8 +123,21 @@ std::vector<int> generate_indices(int count) {
 
 void merge_insersion_sort_vector(std::vector<Node*> v, std::vector<Node*> &res){
 
+    #ifdef DEBUG
+    std::cout << "----------------------------" << std::endl;
+    std::cout << "ソートが呼ばれた" << std::endl;
+    print_vector(v, "初期値");
+    #endif
+
     if (v.size() < 2) {
+        #ifdef DEBUG
+        std::cout << "size < 2" << std::endl;
+        std::cout << "push_back [" << v[0] << "]"<< std::endl;
+        #endif
         res.push_back(v[0]);
+        #ifdef DEBUG
+        std::cout << "............................" << std::endl;
+        #endif
         return;
     }
 
@@ -129,6 +153,10 @@ void merge_insersion_sort_vector(std::vector<Node*> v, std::vector<Node*> &res){
         }
         v[0]->sorted();
         v[1]->sorted();
+        #ifdef DEBUG
+        print_vector(res, "size == 2の処理結果");
+        std::cout << "............................" << std::endl;
+        #endif
         return;
     }
 
@@ -152,11 +180,19 @@ void merge_insersion_sort_vector(std::vector<Node*> v, std::vector<Node*> &res){
             large.push_back(*l_it);
         }
     }
+
+    #ifdef DEBUG
+    print_vector(large, "大きい組の数字");
+    #endif
+
     Node * leaf = NULL;
     if (v.size() % 2 == 1)
-        leaf = v.back();
-
+    leaf = v.back();
     merge_insersion_sort_vector(large, res);
+    #ifdef DEBUG
+    std::cout << "再起から抜けた" << std::endl;
+    print_vector(res, "再起から得た結果");
+    #endif
     for (std::vector<Node *>::iterator it = res.begin(); it != res.end(); ++it) {
         if ((*it)->getSmallerPairV() != NULL) {
             small.push_back((*it)->getSmallerPairV());
@@ -164,6 +200,10 @@ void merge_insersion_sort_vector(std::vector<Node*> v, std::vector<Node*> &res){
         }
     }
     if (leaf != NULL) small.push_back(leaf);
+
+    #ifdef DEBUG
+    print_vector(small, "小さい組の数字  ");
+    #endif
 
 
     std::vector<int> indices = generate_indices(small.size());
@@ -203,6 +243,10 @@ void merge_insersion_sort_vector(std::vector<Node*> v, std::vector<Node*> &res){
         smaller_pair->sorted();
         res.insert(begin, smaller_pair);
     }
+    #ifdef DEBUG
+    print_vector(res, "最終結果");
+    std::cout << "............................" << std::endl;
+    #endif
 }
 
 
@@ -314,3 +358,4 @@ void merge_insersion_sort_list(std::list<Node*> l, std::list<Node*> &res){
         res.insert(begin, smaller_pair);
     }
 }
+
