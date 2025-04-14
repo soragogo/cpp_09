@@ -47,7 +47,7 @@ void print_debug(std::vector<Node *> v, std::list<Node *> l, std::vector<Node *>
     int error = 0;
     for (size_t i = 0; i < v.size(); i++) {
         if (*v[i] != *res_vector[i]) {
-            std::cout << RED << "Error: vector" << END << std::endl;
+            std::cerr << RED << "Error: vector" << END << std::endl;
             error = 1;
             break;
         }
@@ -55,7 +55,7 @@ void print_debug(std::vector<Node *> v, std::list<Node *> l, std::vector<Node *>
 
     for (size_t i = 0; i < l.size(); i++) {
         if (*access_list(l, i) != *access_list(res_list, i)) {
-            std::cout << RED << "Error: list" << END << std::endl;
+            std::cerr << RED << "Error: list" << END << std::endl;
             error = 1;
             break;
         }
@@ -74,7 +74,7 @@ int main(int argc, char **argv) {
     std::list<Node *> l;
 
     if (create_node(v, argc, argv) == 1 || create_node(l, argc, argv) == 1) {
-        std::cout << "Error" << std::endl;
+        std::cerr << "Error" << std::endl;
         for (size_t j = 0; j < v.size(); j++) delete v[j];
         for (size_t j = 0; j < l.size(); j++) delete access_list(l, j);
         return 1;
