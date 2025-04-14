@@ -1,7 +1,7 @@
 #include "RPN.hpp"
 
 #include <csignal>
-
+#include <cstdlib>
 
 void signalHandler(int signalNumber) {
     std::cerr << "signal " << signalNumber << " received" << std::endl;
