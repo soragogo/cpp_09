@@ -12,7 +12,7 @@ jobs:
       - run: make fclean -C ex00
       - run: make debug -C ex01
       - run: ./ex01/RPN "4 2 *"
+      - run: ex01/RPN "0 2 - 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 0 1 - /"
       - run: make fclean -C ex01
       - run: make debug -C ex02
       - run: make fclean -C ex02
-      - run: ex01/RPN "0 2 - 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 0 1 - /"
