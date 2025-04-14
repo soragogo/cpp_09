@@ -9,7 +9,7 @@
 #include <algorithm>  // std::sort
 
 template <typename Container>
-int create_node(Container &c, int argc, char **argv) {
+int create_pmergeme(Container &c, int argc, char **argv) {
 
     if (argc < 2) return 1;
 
@@ -20,7 +20,7 @@ int create_node(Container &c, int argc, char **argv) {
         if (*endptr != '\0' || num <= 0 || num > INT_MAX) {
             return 1;
         }
-        c.push_back(new Node(static_cast<int>(num)));
+        c.push_back(new PmergeMe(static_cast<int>(num)));
     }
     return 0;
 }
@@ -32,17 +32,17 @@ double elapsed_time(struct timeval start, struct timeval end) {
     return elapsed;
 }
 
-struct NodeComparator {
-    bool operator()(Node *a, Node *b) const {
+struct PmergeMeComparator {
+    bool operator()(PmergeMe *a, PmergeMe *b) const {
         return *a < *b;
     }
 };
 
-void print_debug(std::vector<Node *> v, std::list<Node *> l, std::vector<Node *> &res_vector, std::list<Node *> &res_list) {
+void print_debug(std::vector<PmergeMe *> v, std::list<PmergeMe *> l, std::vector<PmergeMe *> &res_vector, std::list<PmergeMe *> &res_list) {
 
 
-    std::sort(v.begin(), v.end(), NodeComparator());
-    l.sort(NodeComparator());
+    std::sort(v.begin(), v.end(), PmergeMeComparator());
+    l.sort(PmergeMeComparator());
 
     int error = 0;
     for (size_t i = 0; i < v.size(); i++) {
@@ -70,18 +70,18 @@ size_t count_vector = 0;
 size_t count_list = 0;
 
 int main(int argc, char **argv) {
-    std::vector<Node *> v;
-    std::list<Node *> l;
+    std::vector<PmergeMe *> v;
+    std::list<PmergeMe *> l;
 
-    if (create_node(v, argc, argv) == 1 || create_node(l, argc, argv) == 1) {
+    if (create_pmergeme(v, argc, argv) == 1 || create_pmergeme(l, argc, argv) == 1) {
         std::cerr << "Error" << std::endl;
         for (size_t j = 0; j < v.size(); j++) delete v[j];
         for (size_t j = 0; j < l.size(); j++) delete access_list(l, j);
         return 1;
     }
 
-    std::vector<Node *> res_vector;
-    std::list<Node *> res_list;
+    std::vector<PmergeMe *> res_vector;
+    std::list<PmergeMe *> res_list;
 
     struct timeval start_v, end_v;
     struct timeval start_l, end_l;

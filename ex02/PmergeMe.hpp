@@ -8,19 +8,19 @@
 #include <list>
 #include <iostream>
 
-class Node {
+class PmergeMe {
     public:
         // Constructor and Destructor
-        Node(const int & i);
-        ~Node();
+        PmergeMe(const int & i);
+        ~PmergeMe();
 
         // Member functions
-        Node *  getLargerPair();
-        Node *  getSmallerPairV();
-        Node *  getSmallerPairL();
-        void setLargerPair(Node * n);
-        void setSmallerPairV(Node * n);
-        void setSmallerPairL(Node * n);
+        PmergeMe *  getLargerPair();
+        PmergeMe *  getSmallerPairV();
+        PmergeMe *  getSmallerPairL();
+        void setLargerPair(PmergeMe * n);
+        void setSmallerPairV(PmergeMe * n);
+        void setSmallerPairL(PmergeMe * n);
         void eraseSmallerPairV();
         void eraseSmallerPairL();
         void sorted();
@@ -31,20 +31,20 @@ class Node {
     private:
         int _number;
         bool _sorted;
-        std::vector<Node *> _smaller_pair_v;
-        std::list<Node *> _smaller_pair_l;
-        Node* _larger_pair;
+        std::vector<PmergeMe *> _smaller_pair_v;
+        std::list<PmergeMe *> _smaller_pair_l;
+        PmergeMe* _larger_pair;
 
         // Copy constructor and assignment operator
-        Node(void);
-        Node(const Node & src);
-        Node & operator=(const Node & rhs);
+        PmergeMe(void);
+        PmergeMe(const PmergeMe & src);
+        PmergeMe & operator=(const PmergeMe & rhs);
 };
 
-Node * access_list(std::list<Node*> &l, int i);
+PmergeMe * access_list(std::list<PmergeMe*> &l, int i);
 
-void merge_insersion_sort_vector(std::vector<Node*> v, std::vector<Node*> &res);
-void merge_insersion_sort_list(std::list<Node*> v, std::list<Node*> &res);
+void merge_insersion_sort_vector(std::vector<PmergeMe*> v, std::vector<PmergeMe*> &res);
+void merge_insersion_sort_list(std::list<PmergeMe*> v, std::list<PmergeMe*> &res);
 
 // count
 extern size_t count_vector;
