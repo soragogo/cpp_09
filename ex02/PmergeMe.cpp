@@ -205,26 +205,49 @@ void merge_insersion_sort_vector(std::vector<PmergeMe*> v, std::vector<PmergeMe*
     print_vector(small, "小さい組の数字  ");
     #endif
 
-
+    #ifdef DEBUG
+    std::cout << std::endl;
+    #endif
     std::vector<int> indices = generate_indices(small.size());
     int small_end = small.size() - 1;
     for (size_t i = 0; i < small.size(); ++i) {
-
         if (i == 0) {
             small[0]->sorted();
             res.insert(res.begin(), small[0]);
+            #ifdef DEBUG
+            std::cout << "    1番目の数字["<< *small[0] << "]を処理"<< std::endl;
+            std::cout << std::endl;
+            print_vector(res, "現在のソート結果");
+            std::cout << std::endl;
+            #endif
             continue;
         }
-
+        
         int geta = (indices[i] - 1) > small_end ? small_end-- : indices[i] - 1;
         std::vector<PmergeMe*>::iterator it = (small.begin() + geta);
         PmergeMe* smaller_pair = *it;
         PmergeMe* larger_pair = smaller_pair->getLargerPair();
-
+        
         std::vector<PmergeMe*>::iterator res_pos;
+
+        #ifdef DEBUG
+        std::cout << "    " << indices[i] << "番目の数字[" << *smaller_pair << "]を処理"<< std::endl;
+        #endif
+
         for (res_pos = res.begin(); res_pos != res.end(); ++res_pos) {
             if (*res_pos == larger_pair) break;
         }
+        #ifdef DEBUG
+        std::vector<PmergeMe*>::iterator debug_it = res.begin();
+        std::cout << "    [" << *smaller_pair  << "]と比較対象の数字は ";
+        while (debug_it != res_pos) {
+            std::cout << "[" << *(*debug_it) << "] ";
+            ++debug_it;
+        }
+        std::cout << std::endl;
+        #endif
+
+
 
         std::vector<PmergeMe*>::iterator begin = res.begin();
         std::vector<PmergeMe*>::iterator end = res_pos - 1;
@@ -233,6 +256,9 @@ void merge_insersion_sort_vector(std::vector<PmergeMe*> v, std::vector<PmergeMe*
             mid = begin + (end - begin) / 2;
             // count
             count_vector++;
+            #ifdef DEBUG
+            std::cout << "     [" << *(*mid) << "]と比較" << std::endl;
+            #endif
             if (*(*mid) > *smaller_pair) {
                 end = mid - 1;
             } else {
@@ -241,10 +267,21 @@ void merge_insersion_sort_vector(std::vector<PmergeMe*> v, std::vector<PmergeMe*
         }
 
         smaller_pair->sorted();
+        #ifdef DEBUG
+        if (begin == res.end()) {
+            std::cout << "    [" << *smaller_pair << "]を[" << *(*(begin - 1)) << "]の後に挿入" << std::endl;
+        } else {
+            std::cout << "    [" << *smaller_pair << "]を[" << *(*begin) << "]の前に挿入" << std::endl;
+        }
+        #endif
         res.insert(begin, smaller_pair);
+        #ifdef DEBUG
+        std::cout << std::endl;
+        print_vector(res, "現在のソート結果");
+        std::cout << std::endl;
+        #endif
     }
     #ifdef DEBUG
-    print_vector(res, "最終結果");
     std::cout << "............................" << std::endl;
     #endif
 }
@@ -353,7 +390,7 @@ void merge_insersion_sort_list(std::list<PmergeMe*> l, std::list<PmergeMe*> &res
                 ++begin;
             }
         }
-
+        
         smaller_pair->sorted();
         res.insert(begin, smaller_pair);
     }
