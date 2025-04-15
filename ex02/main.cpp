@@ -111,7 +111,7 @@ int main(int argc, char **argv) {
     // }
     std::cout << std::endl;
 
-    print_debug(v, l, res_vector, res_list);
+    // print_debug(v, l, res_vector, res_list);
 
     // time
     std::cout << "Time to process a range of " << (argc - 1) << " elements with std::vector : " << elapsed_time(start_v, end_v) << " us" << std::endl;
