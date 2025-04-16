@@ -22,7 +22,7 @@ PmergeMe * access_list(std::list<PmergeMe*> &l, int i) {
 }
 
 // PmergeMe class constructor and destructor
-PmergeMe::PmergeMe(const int & i) : _number(i), _sorted(false) {}
+PmergeMe::PmergeMe(const int & i) : _number(i), _sorted(false), _larger_pair(NULL){}
 
 PmergeMe::PmergeMe(void) : _number(-1), _sorted(false) {}
 
